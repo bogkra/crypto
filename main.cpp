@@ -6,11 +6,15 @@ using namespace std;
 
 int main()
 {
-  srand(time(0)); 
   const string file = "plik.txt";  
 
   Crypt crypt;
 
+  crypt.show();
+  crypt.randomize();
+  crypt.show();
+  const string s = "IVLIVS CAESAR";
+  cout << s << " : " << crypt.encrypt(s) << endl;
  
   return 0;
 }
