@@ -14,7 +14,7 @@ int main()
   crypt.randomize();
   crypt.show();
   const string s = "IVLIVS CAESAR";
-  cout << s << " : " << crypt.encrypt(s) << endl;
+  cout << s << " : " << crypt.encrypt(s) << " -> " << crypt.decrypt(crypt.encrypt(s)) << endl;
  
   return 0;
 }
