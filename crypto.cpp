@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <chrono>
 #include <iostream>
+#include <fstream>
+#include <string>
 
 string Crypt::encrypt(const string s) 
 {
@@ -36,17 +38,38 @@ void Crypt::randomize()
   unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 
   shuffle(sh.begin(), sh.end(), default_random_engine(seed));
-  for (int i=0; i< letters.length(); i++)
+  for (unsigned int i=0; i< letters.length(); i++)
     m[letters[i]] = sh[i];
 
 }
 
-bool Crypt::load(const string file)
+bool Crypt::load(const string fileName)
 {
+  bool result;
+  ifstream file;
+  file.open(fileName);
+  char c1, c2;
+  if ((result = file.good())) {
+    while (file >> c1 >> c2 ) 
+      m[c1] = c2;    
+    file.close();
+  } 
+  return result;
 }
 
-bool Crypt::save(const string file)
+bool Crypt::save(const string fileName)
 {
+  bool result;
+  ofstream file(fileName);
+
+  if ((result = file.good())) {
+    for (auto p : m) {
+      file << p.first << p.second << endl;
+      file.flush();
+    };
+    file.close();
+  };
+  return result;
 }
 
 Crypt::Crypt()

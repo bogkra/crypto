@@ -7,14 +7,19 @@ using namespace std;
 int main()
 {
   const string file = "plik.txt";  
-
   Crypt crypt;
 
   crypt.show();
   crypt.randomize();
   crypt.show();
-  const string s = "IVLIVS CAESAR";
+  const string s = "GAIVS IVLIVS CAESAR";
   cout << s << " : " << crypt.encrypt(s) << " -> " << crypt.decrypt(crypt.encrypt(s)) << endl;
+  if (crypt.save(file)) {
+    crypt.randomize();
+    crypt.show();
+    if (crypt.load(file)) 
+      crypt.show();  
+  }
  
   return 0;
 }
