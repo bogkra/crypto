@@ -76,6 +76,7 @@ Crypt::Crypt()
 {
   for (char l: letters)
      m[l] = l;
+  randomize();
 }
 
 void Crypt::show()
