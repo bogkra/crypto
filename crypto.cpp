@@ -2,34 +2,35 @@
 #include <algorithm>
 #include <chrono>
 #include <iostream>
-#include <iterator>
 #include <fstream>
 #include <string>
 
-string Crypt::encrypt(const string s) 
+/* (C) 2018 Bogusław Krawczuk */
+
+string Crypt::crypt(const string s, Direction dir) 
 {
   string result = "";
+  string s1 = (dir == encr ? letters : code);
+  string s2 = (dir == encr ? code : letters);
   for (char l : s) {
-    auto pos = letters.find(l);
+    auto pos = s1.find(l);
     if (pos != string::npos)
-      result += code.at(pos);
+      result += s2.at(pos);
     else
       result += l;    
   }
   return result;
 }
 
+string Crypt::encrypt(const string s) 
+{
+  return crypt(s, encr);
+}
+
+
 string Crypt::decrypt(const string s)
 {
-  string result = "";
-  for (char l : s) {
-    auto pos = code.find(l);
-    if (pos != string::npos)
-      result += letters.at(pos);
-    else
-      result += l;  
-  }
-  return result;
+  return crypt(s, decr);
 }
 
 void Crypt::randomize()
@@ -45,7 +46,7 @@ bool Crypt::load(const string fileName)
   file.open(fileName);
 
   if ((result = file.good())) {
-    file >> code;
+    getline(file, code);
     file.close();
   } 
   return result;
@@ -57,7 +58,7 @@ bool Crypt::save(const string fileName)
   ofstream file(fileName);
 
   if ((result = file.good())) {
-    file << code;
+    file << code << endl;
     file.close();
   };
   return result;
@@ -68,13 +69,12 @@ Crypt::Crypt()
   letters.insert(letters.end(), 'z' - 'A' + 1, ' ');
   iota(letters.begin(), letters.end(), 'A');   
   letters = letters + " .:,;!?"; 
-  cout << letters;
   code = letters;
   randomize();
 }
 
 void Crypt::show()
 {
-  cout << endl;
+  cout << letters << endl << code << endl << endl;
 }
 

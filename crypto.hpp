@@ -1,6 +1,16 @@
 #include <map>
 using namespace std;
 
+/* (C) 2018 Bogusław Krawczuk */
+
+enum Direction
+{
+  encr,
+  decr
+};
+
+
+
 class Crypt //: map<char,char>
 {
 public:
@@ -14,4 +24,5 @@ public:
 private:
   string letters = "";
   string code = letters;
+  string crypt(const string s, Direction dir);
 };
