@@ -1,17 +1,17 @@
 #include <map>
 using namespace std;
 
-/* (C) 2018 Bogusław Krawczuk */
+/* (C) 2018 Boguslaw Krawczuk */
 
 enum Direction
 {
-  encr,
-  decr
+  dir_enc,
+  dir_dec
 };
 
 
 
-class Crypt //: map<char,char>
+class Crypt //: map<char,char> ?
 {
 public:
   string encrypt(const string s);
@@ -22,7 +22,6 @@ public:
   void show();
   Crypt();
 private:
-  string letters = "";
-  string code = letters;
+  string letters = "", code = "";
   string crypt(const string s, Direction dir);
 };

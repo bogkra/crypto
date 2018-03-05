@@ -1,7 +1,7 @@
 #include "crypto.hpp"
 #include <iostream>
 using namespace std;
-/* (C) 2018 Bogusław Krawczuk */
+/* (C) 2018 Boguslaw Krawczuk */
 
 int main()
 {

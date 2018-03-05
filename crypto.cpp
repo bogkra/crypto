@@ -5,13 +5,13 @@
 #include <fstream>
 #include <string>
 
-/* (C) 2018 Bogusław Krawczuk */
+/* (C) 2018 Boguslaw Krawczuk */
 
 string Crypt::crypt(const string s, Direction dir) 
 {
   string result = "";
-  string s1 = (dir == encr ? letters : code);
-  string s2 = (dir == encr ? code : letters);
+  string s1 = (dir == dir_enc ? letters : code);
+  string s2 = (dir == dir_enc ? code : letters);
   for (char l : s) {
     auto pos = s1.find(l);
     if (pos != string::npos)
@@ -24,13 +24,13 @@ string Crypt::crypt(const string s, Direction dir)
 
 string Crypt::encrypt(const string s) 
 {
-  return crypt(s, encr);
+  return crypt(s, dir_enc);
 }
 
 
 string Crypt::decrypt(const string s)
 {
-  return crypt(s, decr);
+  return crypt(s, dir_dec);
 }
 
 void Crypt::randomize()
