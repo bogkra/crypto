@@ -12,7 +12,6 @@ public:
   void show();
   Crypt();
 private:
-  map<char, char> m;
-  const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  string letters = "";
   string code = letters;
 };
