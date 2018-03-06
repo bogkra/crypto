@@ -7,39 +7,42 @@
 
 /* (C) 2018 Boguslaw Krawczuk */
 
-string Crypt::crypt(const string s, Direction dir) 
+
+string Crypt::crypt(const string& s, const Direction direction) const
 {
   string result = "";
-  string s1 = (dir == dir_enc ? letters : code);
-  string s2 = (dir == dir_enc ? code : letters);
-  for (char l : s) {
-    auto pos = s1.find(l);
-    if (pos != string::npos)
-      result += s2.at(pos);
+  string keys   = (direction == dir_enc ? letters : code);
+  string values = (direction == dir_enc ? code : letters);
+  for (char letter : s) {
+    auto pos = keys.find(letter);
+    if (pos == string::npos)
+      result += letter;    
     else
-      result += l;    
+      result += values.at(pos);
   }
   return result;
 }
 
-string Crypt::encrypt(const string s) 
+
+string Crypt::encrypt(const string& s) const
 {
   return crypt(s, dir_enc);
 }
 
 
-string Crypt::decrypt(const string s)
+string Crypt::decrypt(const string& s) const
 {
   return crypt(s, dir_dec);
 }
 
+
 void Crypt::randomize()
 {
-  unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-  shuffle(code.begin(), code.end(), default_random_engine(seed));
+  shuffle(code.begin(), code.end(), default_random_engine(chrono::system_clock::now().time_since_epoch().count()));
 }
 
-bool Crypt::load(const string fileName)
+
+bool Crypt::load(const string& fileName)
 {
   bool result;
   ifstream file;
@@ -52,7 +55,8 @@ bool Crypt::load(const string fileName)
   return result;
 }
 
-bool Crypt::save(const string fileName)
+
+bool Crypt::save(const string& fileName) const
 {
   bool result;
   ofstream file(fileName);
@@ -64,16 +68,18 @@ bool Crypt::save(const string fileName)
   return result;
 }
 
+
 Crypt::Crypt()
 {
   letters.insert(letters.end(), 'z' - 'A' + 1, ' ');
-  iota(letters.begin(), letters.end(), 'A');   
+  iota(letters.begin(), letters.end(), 'A');
   letters = letters + " .:,;!?"; 
   code = letters;
   randomize();
 }
 
-void Crypt::show()
+
+void Crypt::show() const
 {
   cout << letters << endl << code << endl << endl;
 }
